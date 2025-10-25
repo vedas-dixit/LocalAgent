@@ -1,24 +1,8 @@
 from langchain_ollama import ChatOllama
 from langchain.agents import create_agent
-from langchain.tools import tool
 from langchain_core.runnables import RunnableConfig
-import wikipedia
-
-@tool
-def wiki_search(query: str) -> str:
-    """Search Wikipedia and return a short summary."""
-    try:
-        res = wikipedia.summary(query, sentences=100)
-        print(res)
-        return res
-    except Exception as e:
-        return f"Error: {e}"
-
-@tool
-def multiply_by(num1: float,num2: float) -> float:
-    """Multiply a number"""
-    print("multiply_by called")
-    return num1 * num2
+from tools.prebuild.prebuild import wiki_search
+from tools.custom.custom import multiply_by
 
 def main():
     llm = ChatOllama(model="gpt-oss:120b-cloud", temperature=0.7)
