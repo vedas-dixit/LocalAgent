@@ -4,12 +4,14 @@ from langchain.tools import tool
 @tool
 def duck_duck_go_search(query: str) -> str:
     """Search DuckDuckGo for a given query."""
+    print("duck_duck_go_search CALLED",query)
     search = DuckDuckGoSearchRun()
     res = search.run(query)
     return res
 @tool
 def duck_duck_go_search_results(query: str) -> str:
     """Search DuckDuckGo for a given query and return the results."""
+    print("duck_duck_go_search_results CALLED",query)
     search = DuckDuckGoSearchResults()
     res = search.run(query)
     return res
