@@ -4,7 +4,6 @@ import math
 @tool
 def smart_math(expression: str) -> float:
     """Safely evaluate a mathematical expression (supports +, -, *, /, **, sqrt, sin, etc.)."""
-    print("smart_math called",expression)
     try:
         allowed = {k: getattr(math, k) for k in dir(math) if not k.startswith("_")}
         result = eval(expression, {"__builtins__": {}}, allowed)
