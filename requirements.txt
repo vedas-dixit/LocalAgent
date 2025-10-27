@@ -1,18 +1,18 @@
-# --- Core LangChain stack ---
 langchain>=0.3.0
 langchain-core>=0.3.0
 langchain-community>=0.3.0
 langchain-ollama>=0.1.0
 langgraph>=0.1.0
 
-# --- Search and data tools ---
 duckduckgo-search>=6.3.0
 ddgs>=1.1.6
 wikipedia>=1.4.0
 requests>=2.31.0
 
-# --- Optional utilities (recommended) ---
-chromadb>=0.5.5        # for memory / vector store
-python-dotenv>=1.0.1   # for env vars
-pydantic>=2.8.2        # LangChain dependency
-tqdm>=4.66.1           # progress bars if you add logging
+chromadb>=0.5.5        
+python-dotenv>=1.0.1
+pydantic>=2.8.2
+tqdm>=4.66.1
+asknews-sdk>=0.1.5
+arxiv>=2.2.0
+sympy>=1.12
