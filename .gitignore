@@ -1,2 +1,6 @@
 venv
 .env
+chromadb_store
+__pycache__/
+*/__pycache__/
+**/__pycache__/
