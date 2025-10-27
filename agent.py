@@ -28,7 +28,7 @@ def main():
     )
 
     # Show a live spinner while the agent reasons and calls tools
-    s = Spinner("Reasoning")
+    s = Spinner("Reasoning | Choosing tools | Gathering info")
     s.start()
     try:
         result = agent.invoke(
