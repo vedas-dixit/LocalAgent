@@ -3,7 +3,7 @@ import chromadb
 from chromadb.config import Settings
 
 PERSIST_DIR = "./chromadb_store"
-os.makedirs(PERSIST_DIR, exist_ok=True)   # ✅ ensures folder exists
+os.makedirs(PERSIST_DIR, exist_ok=True)
 
 chroma_client = chromadb.PersistentClient(path=PERSIST_DIR)
 

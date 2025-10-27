@@ -13,7 +13,6 @@ except Exception:
 def _get_console() -> Optional[Console]:
     if not _RICH_AVAILABLE:
         return None
-    # Kurama-inspired theme
     theme = Theme(
         {
             "markdown.h1": "bold orange1",

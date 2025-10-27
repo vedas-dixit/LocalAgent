@@ -2,7 +2,6 @@ from langchain_community.utilities import ArxivAPIWrapper
 from langchain.tools import tool
 from utils.spinner import Spinner
 
-# Initialize the wrapper once
 arxiv = ArxivAPIWrapper()
 
 @tool

@@ -2,7 +2,6 @@ import sys
 import threading
 import time
 
-# ANSI colors (256-color orange ~208)
 ORANGE = "\033[38;5;208m"
 GREEN = "\033[32m"
 RED = "\033[31m"
