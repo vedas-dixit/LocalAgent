@@ -8,7 +8,6 @@ embed = OllamaEmbeddings(model="nomic-embed-text")
 @tool
 def add_to_db(text: str, metadata: dict = None):
     """Add new text to the vector DB."""
-    print("CALLEDDDDTODB")
     doc_id = str(uuid.uuid4())
     embedding = embed.embed_query(text)
     collection.add(

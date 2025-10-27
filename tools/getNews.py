@@ -18,11 +18,9 @@ def asknews_search(query: str) -> str:
     Returns summarized news results with titles and short snippets.
     Ideal for queries like 'latest AI research', 'SpaceX news', or 'tech layoffs 2025'.
     """
-    print("asknews_search called")
     try:
         search = AskNewsSearch(client_id=ASKNEWS_CLIENT_ID, client_secret=ASKNEWS_CLIENT_SECRET)
         results = search.run(query)
-        print(f"[AskNews] Search completed for: {query}")
         return results
     except Exception as e:
         return f"AskNews Error: {e}"

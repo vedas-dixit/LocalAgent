@@ -13,7 +13,6 @@ def arxiv_search(query: str) -> str:
     """
     try:
         results = arxiv.run(query)
-        print(f"[Arxiv] Search successful for: {query}")
         return results
     except Exception as e:
         return f"Arxiv Error: {e}"
