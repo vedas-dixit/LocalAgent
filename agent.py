@@ -11,6 +11,8 @@ from retriever import add_to_db,query_db
 from prompts.research_prompt import KURAMA_RESEARCH_PROMPT
 from dotenv import load_dotenv
 import os
+from utils.spinner import Spinner
+from utils.markdown_render import render_markdown
 
 
 def main():
@@ -25,12 +27,33 @@ def main():
         system_prompt=KURAMA_RESEARCH_PROMPT
     )
 
-    result = agent.invoke(
-        {"messages": [{"role": "user", "content": x}]},
-        config=config
-    )
+    # Show a live spinner while the agent reasons and calls tools
+    s = Spinner("Reasoning")
+    s.start()
+    try:
+        result = agent.invoke(
+            {"messages": [{"role": "user", "content": x}]},
+            config=config
+        )
+        s.stop(success=True)
+    except Exception:
+        s.stop(success=False)
+        raise
+
     final = result["messages"][-1].content
-    print("\n🤖 Agent Final Answer:\n", final)
+
+    # Render the final markdown nicely in the terminal
+    rs = Spinner("Rendering markdown…")
+    rs.start()
+    try:
+        render_markdown(final, title="🦊 Kurama Research Report")
+        rs.stop(success=True)
+    except Exception:
+        rs.stop(success=False)
+        # Fallback to plain print
+        print("\n🦊 Kurama | Answer:\n")
+        print(final)
+
 
 
 if __name__ == "__main__":
