@@ -2,7 +2,8 @@
 
 A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, and pull in fresh news via AskNews.
 
-![fox-typing](https://media.tenor.com/u3W1S8uNwssAAAAC/typing-fox.gif)
+<img width="1839" height="1066" alt="Banner" src="https://github.com/user-attachments/assets/48ec2c05-172c-46cb-a5ef-6289342a62d0" />
+
 
 ### What you get
 
