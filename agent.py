@@ -7,6 +7,8 @@ from tools.getNews import asknews_search
 from tools.arxiv_tool import arxiv_search
 from tools.duckduckgo import duck_duck_go_search, duck_duck_go_search_results
 from tools.getDate import get_current_date
+from tools.save_md import save_md_locally
+from tools.summarize_text import summarize_text
 from retriever import add_to_db,query_db
 from prompts.research_prompt import KURAMA_RESEARCH_PROMPT
 from dotenv import load_dotenv
@@ -25,7 +27,7 @@ def main():
     config = RunnableConfig(tags=["debug", "local"], recursion_limit=recursion_limit)
     agent = create_agent(
         model=llm,
-        tools=[wiki_search, smart_math, duck_duck_go_search, duck_duck_go_search_results, add_to_db, query_db, asknews_search, arxiv_search,get_current_date],
+        tools=[wiki_search, smart_math, duck_duck_go_search, duck_duck_go_search_results, add_to_db, query_db, asknews_search, arxiv_search,get_current_date,save_md_locally,summarize_text],
         system_prompt=KURAMA_RESEARCH_PROMPT
     )
 

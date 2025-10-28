@@ -32,6 +32,8 @@ The agent produces a Markdown answer. The terminal renders this Markdown so it i
   - `math.py` — simple math evaluation
   - `getDate.py` — get the current date
   - `getNews.py` — AskNews search (requires API credentials)
+  - `save_md.py` — save Markdown output locally as files
+  - `summarize_text.py` — summarize long text using the local model
 - `retriever.py` — functions to store and retrieve text from a local ChromaDB using Ollama embeddings.
 - `store/chromadb.py` — sets up a persistent ChromaDB collection in `./chromadb_store`.
 - `utils/spinner.py` — prints a small spinner line while a task runs, then a success or failure mark with duration.
@@ -125,6 +127,7 @@ If Rich is not available, the code prints the raw Markdown string. You can insta
 
 - ChromaDB data is stored in `./chromadb_store`. This folder is created automatically.
 - To reset local memory, delete the `chromadb_store` folder.
+- Markdown reports saved by the agent (using `save_md_locally`) are stored under `./LocalStore`. This folder is created automatically. Filenames end with `.md` and default to a timestamped pattern when not provided.
 
 ## 11. Tests
 
@@ -162,6 +165,12 @@ Some tests reach external services and may take time or fail without an internet
 - Adjust the Markdown theme or border
   - Edit `utils/markdown_render.py`. The color theme and panel style are defined in `_get_console()` and in the `Panel(...)` call.
 
+- Change behavior of `save_md_locally`
+  - Edit `tools/save_md.py`. You can change the base directory (`./LocalStore`) or filename rules.
+
+- Change behavior of `summarize_text`
+  - Edit `tools/summarize_text.py`. It uses `ChatOllama(model="gpt-oss:120b-cloud", temperature=0.4)` and formats a Markdown summary with a Key Takeaway section. Replace the model name with one you have locally if needed, or adjust the prompt.
+
 ## 14. Security and privacy
 
 - The vector store is saved locally in `./chromadb_store`.
@@ -191,7 +200,9 @@ LocalAgent/
 │  ├─ arxiv_tool.py
 │  ├─ math.py
 │  ├─ getDate.py
-│  └─ getNews.py
+│  ├─ getNews.py
+│  ├─ save_md.py
+│  └─ summarize_text.py
 ├─ store/
 │  └─ chromadb.py
 ├─ utils/

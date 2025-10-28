@@ -1,6 +1,7 @@
 venv
 .env
 chromadb_store
+LocalStore
 __pycache__/
 */__pycache__/
 **/__pycache__/

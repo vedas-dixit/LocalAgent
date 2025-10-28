@@ -10,6 +10,7 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 - Tools: wiki, duckduckgo, arxiv, math, date
 - Memory: stores/retrieves snippets in a local ChromaDB folder
 - Optional: AskNews for recent events (needs free API creds)
+- Utilities: save markdown locally (`save_md_locally`) and summarize long text (`summarize_text`)
 
 ---
 
@@ -91,6 +92,7 @@ Type a question like “Summarize the latest on diffusion models” or “What i
 
 - Vector store lives in `./chromadb_store` (created automatically)
 - You can wipe it by deleting that folder if you want a clean slate
+- Markdown reports saved via the tool are in `./LocalStore` (created automatically)
 
 ---
 
@@ -118,7 +120,7 @@ pytest -k "not asknews"   # skip news tests if you didn’t set .env
 
 - `agent.py` – creates the agent and wires up tools
 - `retriever.py` – embeddings + ChromaDB add/query
-- `tools/` – wiki, duckduckgo, arxiv, math, date, asknews
+- `tools/` – wiki, duckduckgo, arxiv, math, date, asknews, save_md, summarize_text
 - `prompts/research_prompt.py` – the system prompt
 
 ![research-mode](https://media.tenor.com/8c9Kymc-A_gAAAAC/research-chill.gif)
