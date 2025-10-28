@@ -1,10 +1,7 @@
 ## Agent Kurama
 
 A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, and pull in fresh news via AskNews.
-
-<img width="1839" height="1066" alt="Banner" src="https://github.com/user-attachments/assets/48ec2c05-172c-46cb-a5ef-6289342a62d0" />
-
-
+<img width="1839" height="968" alt="Banner" src="https://github.com/user-attachments/assets/2e74dd65-fb2e-4c83-8a5f-d794e3fad10b" />
 ### What you get
 
 - Local LLM chat (Ollama)
