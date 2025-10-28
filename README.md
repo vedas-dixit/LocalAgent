@@ -1,7 +1,12 @@
 ## Agent Kurama
 
 A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, and pull in fresh news via AskNews.
-<img width="1839" height="968" alt="Banner" src="https://github.com/user-attachments/assets/2e74dd65-fb2e-4c83-8a5f-d794e3fad10b" />
+
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/2e74dd65-fb2e-4c83-8a5f-d794e3fad10b" alt="Banner" width="960" />
+  
+</p>
+
 ### What you get
 
 - Local LLM chat (Ollama)
@@ -16,81 +21,83 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 
 1. Prereqs
 
-- macOS or Linux (Windows WSL is fine too)
-- Python 3.10+
-- Ollama installed and running
+   - macOS or Linux (Windows WSL is fine too)
+   - Python 3.10+
+   - Ollama installed and running
 
 2. Install Ollama
 
-- macOS (Homebrew):
+   - macOS (Homebrew):
 
-```zsh
-brew install ollama
-ollama serve
-```
+     ```zsh
+     brew install ollama
+     ollama serve
+     ```
 
-- Or grab the app: https://ollama.com
+   - Or grab the app: https://ollama.com
 
 3. Pull the models this project expects
 
-- Chat model used in `agent.py`:
+   - Chat model used in `agent.py`:
 
-```zsh
-ollama pull gpt-oss:120b-cloud
-```
+     ```zsh
+     ollama pull gpt-oss:120b-cloud
+     ```
 
-- Embedding model used for memory in `retriever.py`:
+   - Embedding model used for memory in `retriever.py`:
 
-```zsh
-ollama pull nomic-embed-text
-```
+     ```zsh
+     ollama pull nomic-embed-text
+     ```
 
-Note: If `gpt-oss:120b-cloud` isn’t available on your system, you can swap it for a common model like `llama3:8b` or `qwen2:7b` by editing `agent.py`:
+   Note: If `gpt-oss:120b-cloud` isn’t available on your system, you can swap it for a common model like `llama3:8b` or `qwen2:7b` by editing `agent.py`:
 
-```python
-llm = ChatOllama(model="llama3:8b", temperature=0.7)
-```
+   ```python
+   llm = ChatOllama(model="llama3:8b", temperature=0.7)
+   ```
 
 4. Set up the project
 
-```zsh
-python3 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
-```
+   ```zsh
+   python3 -m venv .venv
+   source .venv/bin/activate
+   pip install -r requirements.txt
+   ```
 
 5. (Optional, but recommended) Add a .env for AskNews
+
    The agent imports the AskNews tool on startup. To avoid errors, add your free AskNews keys:
 
-```env
-# .env
-ASKNEWS_CLIENT_ID=your_client_id
-ASKNEWS_CLIENT_SECRET=your_client_secret
-```
+   ```env
+   # .env
+   ASKNEWS_CLIENT_ID=your_client_id
+   ASKNEWS_CLIENT_SECRET=your_client_secret
+   ```
 
-Don’t want news? Temporarily remove `asknews_search` from the `tools=[...]` list in `agent.py` and the import `from tools.getNews import asknews_search`.
+   Don’t want news? Temporarily remove `asknews_search` from the `tools=[...]` list in `agent.py` and the import `from tools.getNews import asknews_search`.
 
 6. Run it
 
-```zsh
-python agent.py
-```
+   ```zsh
+   python agent.py
+   ```
 
-You’ll see a prompt:
+   You’ll see a prompt:
 
-```
-Ask Kurama 🦊
-```
-<img width="2238" height="1604" alt="image" src="https://github.com/user-attachments/assets/ad0898d7-7892-4735-9ffb-c1a55553262e" />
+   ```
+   Ask Kurama 🦊
+   ```
 
-Type a question like “Summarize the latest on diffusion models” or “What is attention?”
+   <p align="center">
+      <img src="https://github.com/user-attachments/assets/ad0898d7-7892-4735-9ffb-c1a55553262e" alt="CLI prompt" width="48%" />
+      <img src="https://github.com/user-attachments/assets/1f482f94-a7e9-40e5-9b53-8ee551b2dd15" alt="Example query" width="48%" />
+   </p>
 
-<img width="2360" height="1650" alt="image" src="https://github.com/user-attachments/assets/1f482f94-a7e9-40e5-9b53-8ee551b2dd15" />
+   Kurama will Analyze -> Prompt -> Research -> Reason -> Gather Info -> Use Tools -> Save Report -> Preview Report
 
-
-Kurama will Analyze -> Prompt -> Research -> Reason -> Gather Info -> Use Tools -> Save Report -> Preview Report
-
-<img width="2746" height="1866" alt="image" src="https://github.com/user-attachments/assets/eab7a11f-b02c-4915-b54c-032a2a11d64f" />
+   <p align="center">
+      <img src="https://github.com/user-attachments/assets/eab7a11f-b02c-4915-b54c-032a2a11d64f" alt="Workflow" width="960" />
+   </p>
 
 ---
 
@@ -100,7 +107,9 @@ Kurama will Analyze -> Prompt -> Research -> Reason -> Gather Info -> Use Tools 
 - You can wipe it by deleting that folder if you want a clean slate
 - Markdown reports saved via the tool are in `./LocalStore` (created automatically)
 
-<img width="3020" height="1890" alt="image" src="https://github.com/user-attachments/assets/e9eaf9f8-3e7e-4371-95f6-6873f424e8dd" />
+<p align="center">
+   <img src="https://github.com/user-attachments/assets/e9eaf9f8-3e7e-4371-95f6-6873f424e8dd" alt="Local store and ChromaDB" width="960" />
+</p>
 
 ---
 
@@ -131,6 +140,8 @@ pytest -k "not asknews"   # skip news tests if you didn’t set .env
 - `tools/` – wiki, duckduckgo, arxiv, math, date, asknews, save_md, summarize_text
 - `prompts/research_prompt.py` – the system prompt
 
-![research-mode](https://media.tenor.com/8c9Kymc-A_gAAAAC/research-chill.gif)
+<p align="center">
+   <img src="https://media.tenor.com/8c9Kymc-A_gAAAAC/research-chill.gif" alt="research-mode" width="520" />
+</p>
 
 That’s it. Keep it simple, keep it local, have fun.
