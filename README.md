@@ -81,8 +81,16 @@ You’ll see a prompt:
 ```
 Ask Kurama 🦊
 ```
+<img width="2238" height="1604" alt="image" src="https://github.com/user-attachments/assets/ad0898d7-7892-4735-9ffb-c1a55553262e" />
 
 Type a question like “Summarize the latest on diffusion models” or “What is attention?”
+
+<img width="2360" height="1650" alt="image" src="https://github.com/user-attachments/assets/1f482f94-a7e9-40e5-9b53-8ee551b2dd15" />
+
+
+Kurama will Analyze -> Prompt -> Research -> Reason -> Gather Info -> Use Tools -> Save Report -> Preview Report
+
+<img width="2746" height="1866" alt="image" src="https://github.com/user-attachments/assets/eab7a11f-b02c-4915-b54c-032a2a11d64f" />
 
 ---
 
@@ -91,6 +99,8 @@ Type a question like “Summarize the latest on diffusion models” or “What i
 - Vector store lives in `./chromadb_store` (created automatically)
 - You can wipe it by deleting that folder if you want a clean slate
 - Markdown reports saved via the tool are in `./LocalStore` (created automatically)
+
+<img width="3020" height="1890" alt="image" src="https://github.com/user-attachments/assets/e9eaf9f8-3e7e-4371-95f6-6873f424e8dd" />
 
 ---
 
