@@ -13,6 +13,7 @@ from dotenv import load_dotenv
 import os
 from utils.spinner import Spinner
 from utils.markdown_render import render_markdown
+from langgraph.errors import GraphRecursionError
 
 
 def main():
@@ -20,25 +21,43 @@ def main():
     load_dotenv()
 
     llm = ChatOllama(model="gpt-oss:120b-cloud", temperature=0.7)
-    config = RunnableConfig(tags=["debug", "local"],recursion_limit=100)
+    recursion_limit = 100
+    config = RunnableConfig(tags=["debug", "local"], recursion_limit=recursion_limit)
     agent = create_agent(
         model=llm,
         tools=[wiki_search, smart_math, duck_duck_go_search, duck_duck_go_search_results, add_to_db, query_db, asknews_search, arxiv_search,get_current_date],
         system_prompt=KURAMA_RESEARCH_PROMPT
     )
 
-    # Show a live spinner while the agent reasons and calls tools
-    s = Spinner("Reasoning | Choosing tools | Gathering info")
-    s.start()
-    try:
-        result = agent.invoke(
-            {"messages": [{"role": "user", "content": x}]},
-            config=config
-        )
-        s.stop(success=True)
-    except Exception:
-        s.stop(success=False)
-        raise
+    result = None
+    MAX_RECURSION_LIMIT = 1000
+    while True:
+        s = Spinner("Reasoning | Choosing tools | Gathering info")
+        s.start()
+        try:
+            config = RunnableConfig(tags=["debug", "local"], recursion_limit=recursion_limit)
+            result = agent.invoke(
+                {"messages": [{"role": "user", "content": x}]},
+                config=config
+            )
+            s.stop(success=True)
+            break
+        except GraphRecursionError:
+            s.stop(success=False)
+            print(f"\nRecursion limit of {recursion_limit} reached.")
+            choice = input("Continue research with more steps? [y/N]: ").strip().lower()
+            if choice != "y":
+                print("Stopped by user.")
+                return
+            increment = 50
+            recursion_limit = min(recursion_limit + increment, MAX_RECURSION_LIMIT)
+            if recursion_limit >= MAX_RECURSION_LIMIT:
+                print(f"Reached max allowed recursion limit ({MAX_RECURSION_LIMIT}). Aborting.")
+                return
+            # loop and try again with higher limit
+        except Exception:
+            s.stop(success=False)
+            raise
 
     final = result["messages"][-1].content
 
