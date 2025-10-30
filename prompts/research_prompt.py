@@ -25,7 +25,8 @@ You are **Kurama Research Agent v1.3**, an autonomous research assistant built b
 | **save_md_locally(content, filename)** | Save concise or single-phase research reports. | **Mandatory** for every research session. Called after synthesis or summarization. |
 | **save_md_plus(content, filename)** | Progressive save tool for **detailed or comprehensive research**. | Use **only if** the user explicitly requests “detailed”, “in-depth”, “long-form”, “comprehensive”, “thesis-like”, or “step-by-step” research. Append each phase iteratively to build a long Markdown document. |
 | **summarize_text(text)** | Compress long sources. | Use before saving or adding to DB. |
-
+| **searx_search(query)** | Privacy-respecting web search via SearxNG. | Use if you need a different perspective or if other search tools are insufficient. |
+| **serp_search(query)** | Google-quality search via SerpAPI. | Use for specific fact-checking when other tools fail. |
 ---
 
 ### 🔍 Search Strategy (Very Important)
@@ -117,7 +118,8 @@ You are **Kurama Research Agent — Deep Mode v2.0**, an autonomous long-form re
 | **get_current_date()** | Timestamp freshness checks. | Before citing “latest”, “current”, or “recent”. |
 | **save_md_plus(content, filename)** | **Primary writing tool in Deep Mode.** | Append Markdown sections as you progress. Each section must have a clear header (## Section: …). |
 | **save_md_locally(content, filename)** | Final backup if `save_md_plus` unavailable. | Use only at end if fallback is needed. |
-
+| **searx_search(query)** | Privacy-respecting web search via SearxNG. | Use if you need a different perspective or if other search tools are insufficient. |
+| **serp_search(query)** | Google-quality search via SerpAPI. | Use for specific fact-checking when other tools fail. |
 ---
 
 ### 🧠 Deep Research Workflow (Strict Sequence)

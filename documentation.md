@@ -11,6 +11,7 @@ LocalAgent is a small research assistant that runs on your computer. It uses an 
 - store and retrieve notes in a local vector database (ChromaDB)
 - optionally read recent news using AskNews
 - search Google via SerpAPI (optional)
+- search via SearxNG (optional)
 - append segments to an ongoing Markdown report
 
 The agent produces a Markdown answer. The terminal renders this Markdown so it is easy to read.
@@ -31,6 +32,7 @@ The agent produces a Markdown answer. The terminal renders this Markdown so it i
   - `wiki.py` — Wikipedia summary
   - `duckduckgo.py` — DuckDuckGo search and search results
   - `serpSearch.py` — SerpAPI (Google) web search (requires `SERPAPI_API_KEY`)
+  - `SearxNG.py` — SearxNG metasearch (requires `SEARX_INSTANCE_URL`, optional `SEARX_TOP_K_RESULTS`)
   - `arxiv_tool.py` — arXiv paper lookup
   - `math.py` — simple math evaluation
   - `getDate.py` — get the current date
@@ -117,6 +119,17 @@ SERPAPI_API_KEY=your_serpapi_key
 If you don’t plan to use SerpAPI, remove the tool from `agent.py`:
 - Remove `from tools.serpSearch import serp_search`.
 - Remove `serp_search` from the `tools=[...]` list passed to `create_agent`.
+
+SearxNG is also optional (useful for private/self-hosted web search). To enable it, add this to your `.env`:
+
+```env
+SEARX_INSTANCE_URL=https://your-searx-instance
+SEARX_TOP_K_RESULTS=5
+```
+
+If you don’t plan to use SearxNG, remove the tool from `agent.py`:
+- Remove `from tools.SearxNG import searx_search`.
+- Remove `searx_search` from the `tools=[...]` list passed to `create_agent`.
 
 ## 8. Run
 
@@ -216,6 +229,7 @@ LocalAgent/
 │  ├─ wiki.py
 │  ├─ duckduckgo.py
 │  ├─ serpSearch.py
+│  ├─ SearxNG.py
 │  ├─ arxiv_tool.py
 │  ├─ math.py
 │  ├─ getDate.py

@@ -1,6 +1,6 @@
 ## Agent Kurama
 
-A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, pull in fresh news via AskNews, search Google via SerpAPI, and append segments to ongoing Markdown reports.
+A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, pull in fresh news via AskNews, search Google via SerpAPI, search via SearxNG, and append segments to ongoing Markdown reports.
 
 <p align="center">
    <img src="https://github.com/user-attachments/assets/2e74dd65-fb2e-4c83-8a5f-d794e3fad10b" alt="Banner" width="960" />
@@ -11,7 +11,7 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 
 - Local LLM chat (Ollama)
 - Tools: wiki, duckduckgo, arxiv, math, date
-- Extras: serpsearch (Google via SerpAPI), save_md_plus (append to report)
+- Extras: serp_search (Google via SerpAPI), searx_search (SearxNG), save_md_plus (append to report)
 - Memory: stores/retrieves snippets in a local ChromaDB folder
 - Optional: AskNews for recent events (needs free API creds)
 - Utilities: save markdown locally (`save_md_locally`) and summarize long text (`summarize_text`)
@@ -65,7 +65,7 @@ A small local research agent that runs on your machine using LangChain + Ollama.
    pip install -r requirements.txt
    ```
 
-5. (Optional, but recommended) Add a .env for AskNews
+5. (Optional, but recommended) Add a .env for AskNews and optional web search tools
 
    The agent imports the AskNews tool on startup. To avoid errors, add your free AskNews keys:
 
@@ -84,6 +84,15 @@ A small local research agent that runs on your machine using LangChain + Ollama.
    ```
 
    Don’t want SerpAPI? Remove `serp_search` from the `tools=[...]` list and the import `from tools.serpSearch import serp_search`.
+
+   (Optional) To enable SearxNG (self-hosted/private metasearch), add:
+
+   ```env
+   SEARX_INSTANCE_URL=https://your-searx-instance
+   SEARX_TOP_K_RESULTS=5
+   ```
+
+   Don’t want SearxNG? Remove `searx_search` from the `tools=[...]` list and the import `from tools.SearxNG import searx_search`.
 
 6. Run it
 
@@ -146,7 +155,7 @@ pytest -k "not asknews"   # skip news tests if you didn’t set .env
 
 - `agent.py` – creates the agent and wires up tools
 - `retriever.py` – embeddings + ChromaDB add/query
-- `tools/` – wiki, duckduckgo, serpsearch (SerpAPI), arxiv, math, date, asknews, save_md, save_md_plus, summarize_text
+- `tools/` – wiki, duckduckgo, serp_search (SerpAPI), searx_search (SearxNG), arxiv, math, date, asknews, save_md, save_md_plus, summarize_text
 - `prompts/research_prompt.py` – the system prompt
 
 <p align="center">
