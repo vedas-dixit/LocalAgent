@@ -12,7 +12,7 @@ from tools.summarize_text import summarize_text
 from tools.serpSearch import serp_search
 from tools.save_md_plus import save_md_plus
 from retriever import add_to_db,query_db
-from prompts.research_prompt import KURAMA_RESEARCH_PROMPT_GENERIC
+from prompts.research_prompt import KURAMA_RESEARCH_PROMPT_GENERIC, KURAMA_RESEARCH_PROMPT_DEEPRESEARCH
 from dotenv import load_dotenv
 import os
 from utils.spinner import Spinner

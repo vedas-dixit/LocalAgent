@@ -10,6 +10,8 @@ LocalAgent is a small research assistant that runs on your computer. It uses an 
 - do simple math
 - store and retrieve notes in a local vector database (ChromaDB)
 - optionally read recent news using AskNews
+- search Google via SerpAPI (optional)
+- append segments to an ongoing Markdown report
 
 The agent produces a Markdown answer. The terminal renders this Markdown so it is easy to read.
 
@@ -28,11 +30,13 @@ The agent produces a Markdown answer. The terminal renders this Markdown so it i
 - `tools/` — individual tools the agent can call:
   - `wiki.py` — Wikipedia summary
   - `duckduckgo.py` — DuckDuckGo search and search results
+  - `serpSearch.py` — SerpAPI (Google) web search (requires `SERPAPI_API_KEY`)
   - `arxiv_tool.py` — arXiv paper lookup
   - `math.py` — simple math evaluation
   - `getDate.py` — get the current date
   - `getNews.py` — AskNews search (requires API credentials)
   - `save_md.py` — save Markdown output locally as files
+  - `save_md_plus.py` — append timestamped sections to a Markdown report under `./LocalStore`
   - `summarize_text.py` — summarize long text using the local model
 - `retriever.py` — functions to store and retrieve text from a local ChromaDB using Ollama embeddings.
 - `store/chromadb.py` — sets up a persistent ChromaDB collection in `./chromadb_store`.
@@ -104,6 +108,16 @@ If you do not plan to use AskNews, remove the import and tool from `agent.py`:
 - Remove `from tools.getNews import asknews_search`.
 - Remove `asknews_search` from the `tools=[...]` list passed to `create_agent`.
 
+SerpAPI (Google search) is also optional. To enable it, add this to your `.env`:
+
+```env
+SERPAPI_API_KEY=your_serpapi_key
+```
+
+If you don’t plan to use SerpAPI, remove the tool from `agent.py`:
+- Remove `from tools.serpSearch import serp_search`.
+- Remove `serp_search` from the `tools=[...]` list passed to `create_agent`.
+
 ## 8. Run
 
 Start the agent:
@@ -128,6 +142,7 @@ If Rich is not available, the code prints the raw Markdown string. You can insta
 - ChromaDB data is stored in `./chromadb_store`. This folder is created automatically.
 - To reset local memory, delete the `chromadb_store` folder.
 - Markdown reports saved by the agent (using `save_md_locally`) are stored under `./LocalStore`. This folder is created automatically. Filenames end with `.md` and default to a timestamped pattern when not provided.
+- Incremental research notes appended by `save_md_plus` are also stored under `./LocalStore`. Each call adds a `---` divider with a `Segment added <timestamp>` heading so multiple runs build one continuous report.
 
 ## 11. Tests
 
@@ -168,6 +183,9 @@ Some tests reach external services and may take time or fail without an internet
 - Change behavior of `save_md_locally`
   - Edit `tools/save_md.py`. You can change the base directory (`./LocalStore`) or filename rules.
 
+- Change behavior of `save_md_plus`
+  - Edit `tools/save_md_plus.py`. It appends a timestamped section to an existing Markdown file (creates it if missing). You can adjust the default filename pattern or the section header format.
+
 - Change behavior of `summarize_text`
   - Edit `tools/summarize_text.py`. It uses `ChatOllama(model="gpt-oss:120b-cloud", temperature=0.4)` and formats a Markdown summary with a Key Takeaway section. Replace the model name with one you have locally if needed, or adjust the prompt.
 
@@ -197,11 +215,13 @@ LocalAgent/
 ├─ tools/
 │  ├─ wiki.py
 │  ├─ duckduckgo.py
+│  ├─ serpSearch.py
 │  ├─ arxiv_tool.py
 │  ├─ math.py
 │  ├─ getDate.py
 │  ├─ getNews.py
 │  ├─ save_md.py
+│  ├─ save_md_plus.py
 │  └─ summarize_text.py
 ├─ store/
 │  └─ chromadb.py
@@ -214,7 +234,9 @@ LocalAgent/
    ├─ test_wiki.py
    ├─ test_duckduckgo.py
    ├─ test_arxiv.py
-   └─ test_asknews.py
+  ├─ test_asknews.py
+  ├─ test_save_md_plus.py
+  └─ test_serpsearch.py
 ```
 
 ## 17. Questions and answers

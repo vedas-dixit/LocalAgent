@@ -1,6 +1,6 @@
 ## Agent Kurama
 
-A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, and pull in fresh news via AskNews.
+A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, pull in fresh news via AskNews, search Google via SerpAPI, and append segments to ongoing Markdown reports.
 
 <p align="center">
    <img src="https://github.com/user-attachments/assets/2e74dd65-fb2e-4c83-8a5f-d794e3fad10b" alt="Banner" width="960" />
@@ -11,6 +11,7 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 
 - Local LLM chat (Ollama)
 - Tools: wiki, duckduckgo, arxiv, math, date
+- Extras: serpsearch (Google via SerpAPI), save_md_plus (append to report)
 - Memory: stores/retrieves snippets in a local ChromaDB folder
 - Optional: AskNews for recent events (needs free API creds)
 - Utilities: save markdown locally (`save_md_locally`) and summarize long text (`summarize_text`)
@@ -76,6 +77,14 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 
    Don’t want news? Temporarily remove `asknews_search` from the `tools=[...]` list in `agent.py` and the import `from tools.getNews import asknews_search`.
 
+   (Optional) To enable SerpAPI (Google) search, also add:
+
+   ```env
+   SERPAPI_API_KEY=your_serpapi_key
+   ```
+
+   Don’t want SerpAPI? Remove `serp_search` from the `tools=[...]` list and the import `from tools.serpSearch import serp_search`.
+
 6. Run it
 
    ```zsh
@@ -137,7 +146,7 @@ pytest -k "not asknews"   # skip news tests if you didn’t set .env
 
 - `agent.py` – creates the agent and wires up tools
 - `retriever.py` – embeddings + ChromaDB add/query
-- `tools/` – wiki, duckduckgo, arxiv, math, date, asknews, save_md, summarize_text
+- `tools/` – wiki, duckduckgo, serpsearch (SerpAPI), arxiv, math, date, asknews, save_md, save_md_plus, summarize_text
 - `prompts/research_prompt.py` – the system prompt
 
 <p align="center">
