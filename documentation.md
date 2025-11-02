@@ -34,6 +34,10 @@ The agent produces a Markdown answer. The terminal renders this Markdown so it i
   - `serpSearch.py` — SerpAPI (Google) web search (requires `SERPAPI_API_KEY`)
   - `SearxNG.py` — SearxNG metasearch (requires `SEARX_INSTANCE_URL`, optional `SEARX_TOP_K_RESULTS`)
   - `arxiv_tool.py` — arXiv paper lookup
+  - `crossref.py` — Crossref works/DOI metadata (no key; supports rows/sort)
+  - `unpaywall.py` — Open-access lookup for a DOI (requires an email parameter or `UNPAYWALL_EMAIL`)
+  - `europe_pmc.py` — Europe PMC biomedical literature search (no key; supports pageSize)
+  - `openlibrary.py` — Open Library book/works search (no key; supports limit)
   - `math.py` — simple math evaluation
   - `getDate.py` — get the current date
   - `getNews.py` — AskNews search (requires API credentials)
@@ -107,6 +111,7 @@ ASKNEWS_CLIENT_SECRET=your_client_secret
 ```
 
 If you do not plan to use AskNews, remove the import and tool from `agent.py`:
+
 - Remove `from tools.getNews import asknews_search`.
 - Remove `asknews_search` from the `tools=[...]` list passed to `create_agent`.
 
@@ -117,6 +122,7 @@ SERPAPI_API_KEY=your_serpapi_key
 ```
 
 If you don’t plan to use SerpAPI, remove the tool from `agent.py`:
+
 - Remove `from tools.serpSearch import serp_search`.
 - Remove `serp_search` from the `tools=[...]` list passed to `create_agent`.
 
@@ -128,6 +134,25 @@ SEARX_TOP_K_RESULTS=5
 ```
 
 If you don’t plan to use SearxNG, remove the tool from `agent.py`:
+Crossref / Unpaywall polite usage
+
+- No API keys are required. For polite and rate-limit-friendly requests, you can set an email for the User-Agent header:
+
+```env
+# Used in tool headers for polite API usage
+CONTACT_EMAIL=you@example.com
+
+# For Unpaywall's required email query parameter
+UNPAYWALL_EMAIL=you@example.com
+```
+
+Notes:
+
+- `unpaywall_lookup` requires an email. Provide inline as `email=you@example.com` or set `UNPAYWALL_EMAIL`.
+- `crossref_search` accepts inline params like `rows=20 sort=relevance order=desc`.
+- `europe_pmc_search` accepts `pageSize=10`.
+- `openlibrary_search` accepts `limit=10`.
+
 - Remove `from tools.SearxNG import searx_search`.
 - Remove `searx_search` from the `tools=[...]` list passed to `create_agent`.
 
@@ -144,6 +169,7 @@ Type a question when prompted. The terminal will show live status lines while ea
 ## 9. How the output is rendered
 
 The final answer is Markdown. `utils/markdown_render.py` uses the Rich library to:
+
 - parse and format Markdown
 - draw an orange border panel
 - apply a simple theme for headings, links, and code blocks
@@ -191,12 +217,15 @@ Some tests reach external services and may take time or fail without an internet
 - Adjust the spinner text or color
   - Edit `utils/spinner.py`. The color codes and frames are defined at the top of the file.
 - Adjust the Markdown theme or border
+
   - Edit `utils/markdown_render.py`. The color theme and panel style are defined in `_get_console()` and in the `Panel(...)` call.
 
 - Change behavior of `save_md_locally`
+
   - Edit `tools/save_md.py`. You can change the base directory (`./LocalStore`) or filename rules.
 
 - Change behavior of `save_md_plus`
+
   - Edit `tools/save_md_plus.py`. It appends a timestamped section to an existing Markdown file (creates it if missing). You can adjust the default filename pattern or the section header format.
 
 - Change behavior of `summarize_text`
@@ -231,6 +260,10 @@ LocalAgent/
 │  ├─ serpSearch.py
 │  ├─ SearxNG.py
 │  ├─ arxiv_tool.py
+│  ├─ crossref.py
+│  ├─ unpaywall.py
+│  ├─ europe_pmc.py
+│  ├─ openlibrary.py
 │  ├─ math.py
 │  ├─ getDate.py
 │  ├─ getNews.py

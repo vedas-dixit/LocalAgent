@@ -1,6 +1,6 @@
 ## Agent Kurama
 
-A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, do quick math, keep notes in a local ChromaDB, pull in fresh news via AskNews, search Google via SerpAPI, search via SearxNG, and append segments to ongoing Markdown reports.
+A small local research agent that runs on your machine using LangChain + Ollama. It can search Wikipedia, DuckDuckGo, Arxiv, Crossref, Europe PMC, Open Library, check Unpaywall OA links, do quick math, keep notes in a local ChromaDB, pull in fresh news via AskNews, search Google via SerpAPI, search via SearxNG, and append segments to ongoing Markdown reports.
 
 <p align="center">
    <img src="https://github.com/user-attachments/assets/2e74dd65-fb2e-4c83-8a5f-d794e3fad10b" alt="Banner" width="960" />
@@ -10,7 +10,7 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 ### What you get
 
 - Local LLM chat (Ollama)
-- Tools: wiki, duckduckgo, arxiv, math, date
+- Tools: wiki, duckduckgo, arxiv, crossref, europe_pmc, openlibrary, unpaywall (OA lookup), math, date
 - Extras: serp_search (Google via SerpAPI), searx_search (SearxNG), save_md_plus (append to report)
 - Memory: stores/retrieves snippets in a local ChromaDB folder
 - Optional: AskNews for recent events (needs free API creds)
@@ -65,7 +65,7 @@ A small local research agent that runs on your machine using LangChain + Ollama.
    pip install -r requirements.txt
    ```
 
-5. (Optional, but recommended) Add a .env for AskNews and optional web search tools
+5. (Optional, but recommended) Add a .env for AskNews, polite headers, and optional web search tools
 
    The agent imports the AskNews tool on startup. To avoid errors, add your free AskNews keys:
 
@@ -93,6 +93,13 @@ A small local research agent that runs on your machine using LangChain + Ollama.
    ```
 
    Don’t want SearxNG? Remove `searx_search` from the `tools=[...]` list and the import `from tools.SearxNG import searx_search`.
+
+   (Optional but polite) To include an email contact in headers for Crossref/Unpaywall and satisfy Unpaywall's required email parameter:
+
+   ```env
+   CONTACT_EMAIL=you@example.com     # used in User-Agent
+   UNPAYWALL_EMAIL=you@example.com   # used by unpaywall_lookup if inline email not provided
+   ```
 
 6. Run it
 
@@ -155,7 +162,7 @@ pytest -k "not asknews"   # skip news tests if you didn’t set .env
 
 - `agent.py` – creates the agent and wires up tools
 - `retriever.py` – embeddings + ChromaDB add/query
-- `tools/` – wiki, duckduckgo, serp_search (SerpAPI), searx_search (SearxNG), arxiv, math, date, asknews, save_md, save_md_plus, summarize_text
+- `tools/` – wiki, duckduckgo, serp_search (SerpAPI), searx_search (SearxNG), arxiv, crossref, europe_pmc, openlibrary, unpaywall, math, date, asknews, save_md, save_md_plus, summarize_text
 - `prompts/research_prompt.py` – the system prompt
 
 <p align="center">
