@@ -23,9 +23,11 @@ import os
 from utils.spinner import Spinner
 from utils.markdown_render import render_markdown
 from langgraph.errors import GraphRecursionError
-
+from pyfiglet import Figlet
 
 def main():
+    f = Figlet(font='standard')
+    print(f.renderText('Kurama v 1.3'))
     x = input("Ask Kurama 🦊\n")
     load_dotenv()
 

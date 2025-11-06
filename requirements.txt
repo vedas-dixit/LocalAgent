@@ -18,3 +18,4 @@ arxiv>=2.2.0
 sympy>=1.12
 rich>=13.7.1
 pytest>=7.4.0
+pyfiglet>=1.0.4
