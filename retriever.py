@@ -1,21 +1,14 @@
-from langchain_ollama import OllamaEmbeddings
 from store.chromadb import collection
 from langchain.tools import tool
 import uuid
 from utils.spinner import Spinner
-import os
+from utils.llm_config import get_embedding_model
 from dotenv import load_dotenv
 
 load_dotenv()
 
-# Configure Ollama embeddings from environment variables
-ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-ollama_embed_model = os.getenv("OLLAMA_EMBED_MODEL", "nomic-embed-text")
-
-embed = OllamaEmbeddings(
-    model=ollama_embed_model,
-    base_url=ollama_base_url
-)
+# Get embedding model based on configured provider
+embed = get_embedding_model()
 
 @tool
 def add_to_db(text: str, metadata: dict = None):

@@ -1,4 +1,3 @@
-from langchain_ollama import ChatOllama
 from langchain.agents import create_agent
 from langchain_core.runnables import RunnableConfig
 from tools.wiki import wiki_search
@@ -22,6 +21,7 @@ from dotenv import load_dotenv
 import os
 from utils.spinner import Spinner
 from utils.markdown_render import render_markdown
+from utils.llm_config import get_chat_model
 from langgraph.errors import GraphRecursionError
 
 
@@ -29,16 +29,8 @@ def main():
     x = input("Ask Kurama 🦊\n")
     load_dotenv()
 
-    # Configure Ollama from environment variables
-    ollama_base_url = os.getenv("OLLAMA_BASE_URL", "http://localhost:11434")
-    ollama_model = os.getenv("OLLAMA_CHAT_MODEL", "gpt-oss:120b-cloud")
-    ollama_temperature = float(os.getenv("OLLAMA_TEMPERATURE", "0.7"))
-
-    llm = ChatOllama(
-        model=ollama_model,
-        temperature=ollama_temperature,
-        base_url=ollama_base_url
-    )
+    # Get chat model based on configured provider
+    llm = get_chat_model()
     recursion_limit = 100
     config = RunnableConfig(tags=["debug", "local"], recursion_limit=recursion_limit)
     agent = create_agent(
