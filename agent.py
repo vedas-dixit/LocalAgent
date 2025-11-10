@@ -1,4 +1,3 @@
-from langchain_ollama import ChatOllama
 from langchain.agents import create_agent
 from langchain_core.runnables import RunnableConfig
 from tools.wiki import wiki_search
@@ -22,6 +21,7 @@ from dotenv import load_dotenv
 import os
 from utils.spinner import Spinner
 from utils.markdown_render import render_markdown
+from utils.llm_config import get_chat_model
 from langgraph.errors import GraphRecursionError
 from pyfiglet import Figlet
 
@@ -31,7 +31,8 @@ def main():
     x = input("Ask Kurama 🦊\n")
     load_dotenv()
 
-    llm = ChatOllama(model="gpt-oss:120b-cloud", temperature=0.7)
+    # Get chat model based on configured provider
+    llm = get_chat_model()
     recursion_limit = 100
     config = RunnableConfig(tags=["debug", "local"], recursion_limit=recursion_limit)
     agent = create_agent(
