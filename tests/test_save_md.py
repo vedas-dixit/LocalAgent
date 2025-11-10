@@ -7,7 +7,7 @@ def test_save_md_locally_creates_file_and_content():
     filename = f"test_md_{uuid.uuid4().hex}.md"
     content = "# Test Title\n\nHello from test."
 
-    res = save_md_locally.run(content, filename)
+    res = save_md_locally.run({"content": content, "filename": filename})
     assert isinstance(res, str)
     assert "Markdown saved successfully" in res
 
