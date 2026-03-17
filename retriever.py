@@ -1,10 +1,14 @@
-from langchain_ollama import OllamaEmbeddings
 from store.chromadb import collection
 from langchain.tools import tool
 import uuid
 from utils.spinner import Spinner
+from utils.llm_config import get_embedding_model
+from dotenv import load_dotenv
 
-embed = OllamaEmbeddings(model="nomic-embed-text")
+load_dotenv()
+
+# Get embedding model based on configured provider
+embed = get_embedding_model()
 
 @tool
 def add_to_db(text: str, metadata: dict = None):
