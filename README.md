@@ -132,6 +132,16 @@ A small local research agent that runs on your machine using LangChain + Ollama.
 - You can wipe it by deleting that folder if you want a clean slate
 - Markdown reports saved via the tool are in `./LocalStore` (created automatically)
 
+Note on Linux/WSL: Previously, files could be written relative to the process working directory (sometimes `/tmp` or another launcher path). This has been fixed. Files now save under the project root `LocalStore` regardless of where the process starts.
+
+- You can override the output directory explicitly by setting an environment variable:
+
+  ```zsh
+  export LOCALAGENT_OUTPUT_DIR=/absolute/path/where/you/want/reports
+  ```
+
+  Both `save_md_locally` and `save_md_plus` respect this variable.
+
 <p align="center">
    <img src="https://github.com/user-attachments/assets/e9eaf9f8-3e7e-4371-95f6-6873f424e8dd" alt="Local store and ChromaDB" width="960" />
 </p>
@@ -155,6 +165,7 @@ pytest -k "not asknews"   # skip news tests if you didn’t set .env
 - “AskNews Error / Missing env” → add `ASKNEWS_CLIENT_ID` and `ASKNEWS_CLIENT_SECRET` to your `.env` or remove the AskNews tool from the agent.
 - “Ollama not running” → start it with `ollama serve`. On macOS, the app can also run a background service.
 - “Chroma DB issues” → delete the `chromadb_store` folder and try again.
+- “Report saved but can’t find it” → the save tools now return an absolute path in their success message. Copy that path. If you still want to control the folder, set `LOCALAGENT_OUTPUT_DIR` (see above).
 
 ---
 
